@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">TaskSync</string>
+    <string name="title_activity_main">TaskSync</string>
+    <string name="package_name">com.TaskSync.alexx</string>
+    <string name="custom_url_scheme">com.TaskSync.alexx</string>
+</resources>
