@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TaskSync</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>TaskSync</h1>
+        <p>Calendar & Task Planner</p>
+    </header>
+
+    <main>
+
+        <section class="calendar">
+
+            <!-- Calendar Header -->
+            <div class="calendar-header">
+
+                <button id="previousMonth">‹</button>
+
+                <h2 id="monthYear"></h2>
+
+                <button id="nextMonth">›</button>
+
+            </div>
+
+
+            <!-- Weekdays -->
+            <div class="weekdays">
+
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+
+            </div>
+
+
+            <!-- Calendar Days -->
+            <div id="calendarDays" class="calendar-days"></div>
+
+
+            <!-- Selected Date -->
+            <div class="selected-date">
+
+                <h3 id="selectedDate">
+                    Select a date
+                </h3>
+
+
+                <!-- Tasks -->
+                <div id="taskList">
+
+                    <p>No tasks for this day.</p>
+
+                </div>
+
+
+                <!-- Add Task Button -->
+                <button id="addTaskButton">
+                    ＋ Add Task
+                </button>
+
+
+                <!-- Add Task Form -->
+                <div id="taskForm" class="task-form hidden">
+
+                    <h3>Add Task</h3>
+
+
+                    <label for="taskTitle">
+                        Task
+                    </label>
+
+                    <input
+                        type="text"
+                        id="taskTitle"
+                        placeholder="Enter task name"
+                    >
+
+
+                    <label for="taskDescription">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="taskDescription"
+                        placeholder="Enter description"
+                    ></textarea>
+
+
+                    <label for="taskDate">
+                        Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="taskDate"
+                    >
+
+
+                    <label for="taskTime">
+                        Deadline
+                    </label>
+
+                    <input
+                        type="time"
+                        id="taskTime"
+                    >
+
+
+                    <label for="taskProject">
+    Project / Group
+</label>
+<label for="taskReminder">
+    Reminder
+</label>
+
+<select id="taskReminder">
+
+    <option value="none">
+        No reminder
+    </option>
+
+    <option value="5">
+        5 minutes before
+    </option>
+
+    <option value="10">
+        10 minutes before
+    </option>
+
+    <option value="30">
+        30 minutes before
+    </option>
+
+    <option value="60">
+        1 hour before
+    </option>
+
+    <option value="1440">
+        1 day before
+    </option>
+
+</select>
+
+<select id="taskProject">
+
+    <option value="">
+        No Project
+    </option>
+
+</select>
+
+
+<label for="taskPriority">
+    Priority
+</label>
+
+<select id="taskPriority">
+
+    <option value="low">
+        Low
+    </option>
+
+    <option value="medium" selected>
+        Medium
+    </option>
+
+    <option value="high">
+        High
+    </option>
+
+</select>
+
+
+                    <div class="form-buttons">
+
+                        <button id="cancelTask">
+                            Cancel
+                        </button>
+
+                        <button id="saveTask">
+                            Save Task
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+        <section class="projects-section">
+
+    <h2>Projects / Groups</h2>
+
+    <div class="project-form">
+
+        <input
+            type="text"
+            id="projectName"
+            placeholder="Project name"
+        >
+
+        <input
+            type="text"
+            id="projectDescription"
+            placeholder="Description (optional)"
+        >
+
+        <button id="addProjectButton">
+            + Add Project
+        </button>
+
+    </div>
+
+    <div id="projectList">
+        <p>No projects yet.</p>
+    </div>
+
+</section>
+
+    </main>
+
+
+<script src="js/dexie.min.js"></script>
+<script src="js/database.js"></script>
+<script src="js/tasks.js"></script>
+<script src="js/calendar.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+
+</html>
