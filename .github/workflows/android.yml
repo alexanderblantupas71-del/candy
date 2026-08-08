@@ -26,7 +26,7 @@ jobs:
         run: npx cap sync android
 
       - name: Setup Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 21
@@ -37,8 +37,14 @@ jobs:
           chmod +x gradlew
           ./gradlew assembleDebug
 
+      - name: Find APK
+        run: |
+          echo "APK files found:"
+          find android -type f -name "*.apk" -print
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: museum-app-apk
-          path: android/app/build/outputs/apk/debug/TaskSync.apk
+          name: TaskSync-APK
+          path: android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
