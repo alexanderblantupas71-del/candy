@@ -1,49 +1,54 @@
-// TaskSync Offline Database
-// Uses Dexie + IndexedDB
+/* ============================================================
+   TASKSYNC DATABASE
+   Dexie + IndexedDB
+   ============================================================ */
 
 const db = new Dexie("TaskSyncDB");
 
 
-// ================================
-// DATABASE STRUCTURE
-// ================================
+/* ============================================================
+   DATABASE VERSION
+   ============================================================ */
 
 db.version(1).stores({
 
-    // Projects / Groups
-    projects:
-        "++id, name",
-
-    // Calendar Events
     events:
-        "++id, date, startDate, endDate",
+        "++id, title, startDate, endDate, dueDate",
 
-    // Tasks
     tasks:
-        "++id, date, startDate, dueDate, projectId, status, priority",
-
-    // Subtasks / Checklist
-    subtasks:
-        "++id, taskId, completed",
-
-    // Reminders
-    reminders:
-        "++id, taskId, eventId, remindAt, completed"
+        "++id, title, startDate, endDate, dueDate"
 
 });
 
 
-// ================================
-// PROJECTS
-// ================================
+/* ============================================================
+   EVENTS
+   ============================================================ */
 
-async function addProject(name, description = "") {
+async function saveEvent(eventData) {
 
-    return await db.projects.add({
+    return await db.events.add({
 
-        name: name,
+        title: eventData.title,
 
-        description: description,
+        startDate: eventData.startDate,
+        startTime: eventData.startTime,
+
+        endDate: eventData.endDate,
+        endTime: eventData.endTime,
+
+        dueDate: eventData.dueDate,
+        dueTime: eventData.dueTime,
+
+        repeat: eventData.repeat,
+
+        location: eventData.location,
+
+        description: eventData.description,
+
+        reminder: Number(eventData.reminder),
+
+        color: eventData.color,
 
         createdAt: new Date().toISOString()
 
@@ -52,47 +57,48 @@ async function addProject(name, description = "") {
 }
 
 
-async function getProjects() {
+async function getEvents() {
 
-    return await db.projects.toArray();
-
-}
-
-
-async function deleteProject(id) {
-
-    await db.projects.delete(id);
+    return await db.events.toArray();
 
 }
 
 
-// ================================
-// TASKS
-// ================================
+async function deleteEvent(id) {
 
-async function addTask(task) {
+    return await db.events.delete(id);
+
+}
+
+
+/* ============================================================
+   TASKS
+   ============================================================ */
+
+async function saveTask(taskData) {
 
     return await db.tasks.add({
 
-        title: task.title,
+        title: taskData.title,
 
-        description: task.description || "",
+        startDate: taskData.startDate,
+        startTime: taskData.startTime,
 
-        date: task.date,
+        endDate: taskData.endDate,
+        endTime: taskData.endTime,
 
-        time: task.time || "",
+        dueDate: taskData.dueDate,
+        dueTime: taskData.dueTime,
 
-        startDate: task.startDate || task.date,
+        repeat: taskData.repeat,
 
-        dueDate: task.dueDate || task.date,
+        description: taskData.description,
 
-        priority: task.priority || "medium",
+        reminder: Number(taskData.reminder),
 
-        status: task.status || "not-yet",
+        color: taskData.color,
 
-        projectId: task.projectId || null,
-
-        reminder: task.reminder || null,
+        completed: false,
 
         createdAt: new Date().toISOString()
 
@@ -108,202 +114,31 @@ async function getTasks() {
 }
 
 
-async function getTasksForDate(date) {
-
-    return await db.tasks
-        .where("date")
-        .equals(date)
-        .toArray();
-
-}
-
-
-async function getTask(id) {
-
-    return await db.tasks.get(id);
-
-}
-
-
-async function updateTask(id, changes) {
-
-    return await db.tasks.update(id, changes);
-
-}
-
-
 async function deleteTask(id) {
 
-    // Delete subtasks belonging to this task
-    await db.subtasks
-        .where("taskId")
-        .equals(id)
-        .delete();
-
-    // Delete reminders belonging to this task
-    await db.reminders
-        .where("taskId")
-        .equals(id)
-        .delete();
-
-    // Delete task
     return await db.tasks.delete(id);
 
 }
 
 
-// ================================
-// SUBTASKS / CHECKLIST
-// ================================
+/* ============================================================
+   GET EVERYTHING
+   ============================================================ */
 
-async function addSubtask(taskId, title) {
+async function getAllCalendarItems() {
 
-    return await db.subtasks.add({
+    const events =
+        await getEvents();
 
-        taskId: taskId,
+    const tasks =
+        await getTasks();
 
-        title: title,
 
-        completed: false
+    return {
 
-    });
+        events,
+        tasks
 
-}
-
-
-async function getSubtasks(taskId) {
-
-    return await db.subtasks
-        .where("taskId")
-        .equals(taskId)
-        .toArray();
-
-}
-
-
-async function toggleSubtask(id, completed) {
-
-    return await db.subtasks.update(id, {
-
-        completed: completed
-
-    });
-
-}
-
-
-async function deleteSubtask(id) {
-
-    return await db.subtasks.delete(id);
-
-}
-
-
-// ================================
-// CALENDAR EVENTS
-// ================================
-
-async function addEvent(event) {
-
-    return await db.events.add({
-
-        title: event.title,
-
-        description: event.description || "",
-
-        date: event.date,
-
-        startDate: event.startDate,
-
-        endDate: event.endDate,
-
-        location: event.location || "",
-
-        meetingLink: event.meetingLink || "",
-
-        people: event.people || "",
-
-        reminder: event.reminder || null,
-
-        checklist: event.checklist || [],
-
-        attachments: event.attachments || [],
-
-        createdAt: new Date().toISOString()
-
-    });
-
-}
-
-
-async function getEventsForDate(date) {
-
-    return await db.events
-        .where("date")
-        .equals(date)
-        .toArray();
-
-}
-
-
-async function getEvents() {
-
-    return await db.events.toArray();
-
-}
-
-
-async function updateEvent(id, changes) {
-
-    return await db.events.update(id, changes);
-
-}
-
-
-async function deleteEvent(id) {
-
-    return await db.events.delete(id);
-
-}
-
-
-// ================================
-// REMINDERS
-// ================================
-
-async function addReminder(reminder) {
-
-    return await db.reminders.add({
-
-        taskId: reminder.taskId || null,
-
-        eventId: reminder.eventId || null,
-
-        remindAt: reminder.remindAt,
-
-        completed: false
-
-    });
-
-}
-
-
-async function getPendingReminders() {
-
-    return await db.reminders
-        .where("completed")
-        .equals(false)
-        .toArray();
-
-}
-
-
-async function completeReminder(id) {
-
-    return await db.reminders.update(id, {
-
-        completed: true
-
-    });
+    };
 
 }
