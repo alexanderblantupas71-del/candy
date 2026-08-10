@@ -3,198 +3,313 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>TaskSync</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
 </head>
 
 <body>
 
-    <header>
-        <h1>TaskSync</h1>
-        <p>Calendar & Task Planner</p>
+    <!-- =====================================================
+         TOP HEADER
+         ===================================================== -->
+
+    <header class="topbar">
+
+        <div class="topbar-left">
+
+            <button
+                id="menuButton"
+                class="icon-button"
+                type="button"
+                aria-label="Open menu"
+            >
+                ☰
+            </button>
+
+            <div class="app-icon">
+                10
+            </div>
+
+            <div class="app-title">
+                Calendar
+            </div>
+
+        </div>
+
+
+        <div class="topbar-center">
+
+            <button
+                id="todayButton"
+                class="today-button"
+                type="button"
+            >
+                Today
+            </button>
+
+            <button
+                id="previousWeek"
+                class="navigation-button"
+                type="button"
+                aria-label="Previous week"
+            >
+                ‹
+            </button>
+
+            <button
+                id="nextWeek"
+                class="navigation-button"
+                type="button"
+                aria-label="Next week"
+            >
+                ›
+            </button>
+
+            <h1 id="currentMonth">
+                August 2026
+            </h1>
+
+        </div>
+
+
+        <div class="topbar-right">
+
+            <button
+                class="icon-button"
+                type="button"
+                aria-label="Search"
+            >
+                🔍
+            </button>
+
+            <button
+                class="icon-button"
+                type="button"
+                aria-label="Help"
+            >
+                ?
+            </button>
+
+            <button
+                class="icon-button"
+                type="button"
+                aria-label="Settings"
+            >
+                ⚙
+            </button>
+
+            <select
+                id="viewSelector"
+                class="view-selector"
+            >
+                <option value="week">
+                    Week
+                </option>
+
+                <option value="day">
+                    Day
+                </option>
+
+                <option value="month">
+                    Month
+                </option>
+            </select>
+
+        </div>
+
     </header>
 
-    <main>
 
-        <section class="calendar">
+    <!-- =====================================================
+         APPLICATION
+         ===================================================== -->
 
-            <!-- Calendar Header -->
-            <div class="calendar-header">
+    <main class="application">
 
-                <button id="previousMonth">‹</button>
+        <!-- =================================================
+             SIDEBAR
+             ================================================= -->
 
-                <h2 id="monthYear"></h2>
+        <aside
+            id="sidebar"
+            class="sidebar"
+        >
 
-                <button id="nextMonth">›</button>
-
-            </div>
-
-
-            <!-- Weekdays -->
-            <div class="weekdays">
-
-                <div>Sun</div>
-                <div>Mon</div>
-                <div>Tue</div>
-                <div>Wed</div>
-                <div>Thu</div>
-                <div>Fri</div>
-                <div>Sat</div>
-
-            </div>
+            <button
+                id="createButton"
+                class="create-button"
+                type="button"
+            >
+                <span class="create-plus">＋</span>
+                <span>Create</span>
+                <span class="create-arrow">⌄</span>
+            </button>
 
 
-            <!-- Calendar Days -->
-            <div id="calendarDays" class="calendar-days"></div>
+            <!-- MINI CALENDAR -->
 
+            <section class="mini-calendar">
 
-            <!-- Selected Date -->
-            <div class="selected-date">
+                <div class="mini-calendar-header">
 
-                <h3 id="selectedDate">
-                    Select a date
-                </h3>
+                    <button
+                        id="miniPrevious"
+                        type="button"
+                    >
+                        ‹
+                    </button>
 
+                    <strong id="miniMonth">
+                        August 2026
+                    </strong>
 
-                <!-- Tasks -->
-                <div id="taskList">
-
-                    <p>No tasks for this day.</p>
+                    <button
+                        id="miniNext"
+                        type="button"
+                    >
+                        ›
+                    </button>
 
                 </div>
 
 
-                <!-- Add Task Button -->
-                <button id="addTaskButton">
-                    ＋ Add Task
-                </button>
+                <div class="mini-weekdays">
+
+                    <span>S</span>
+                    <span>M</span>
+                    <span>T</span>
+                    <span>W</span>
+                    <span>T</span>
+                    <span>F</span>
+                    <span>S</span>
+
+                </div>
 
 
-                <!-- Add Task Form -->
-                <div id="taskForm" class="task-form hidden">
+                <div
+                    id="miniCalendarDays"
+                    class="mini-calendar-days"
+                >
+                </div>
 
-                    <h3>Add Task</h3>
-
-
-                    <label for="taskTitle">
-                        Task
-                    </label>
-
-                    <input
-                        type="text"
-                        id="taskTitle"
-                        placeholder="Enter task name"
-                    >
+            </section>
 
 
-                    <label for="taskDescription">
-                        Description
-                    </label>
+            <!-- SEARCH PEOPLE -->
 
-                    <textarea
-                        id="taskDescription"
-                        placeholder="Enter description"
-                    ></textarea>
-
-
-                    <label for="taskDate">
-                        Date
-                    </label>
-
-                    <input
-                        type="date"
-                        id="taskDate"
-                    >
+            <button
+                class="people-button"
+                type="button"
+            >
+                <span>♧</span>
+                <span>Search for people</span>
+            </button>
 
 
-                    <label for="taskTime">
-                        Deadline
-                    </label>
+            <!-- CALENDARS -->
+
+            <section class="calendar-list">
+
+                <div class="calendar-list-title">
+                    My calendars
+                </div>
+
+                <label class="calendar-option">
 
                     <input
-                        type="time"
-                        id="taskTime"
+                        type="checkbox"
+                        checked
                     >
 
+                    <span class="calendar-color blue"></span>
 
-                    <label for="taskProject">
-    Project / Group
-</label>
-<label for="taskReminder">
-    Reminder
-</label>
+                    <span>
+                        My Calendar
+                    </span>
 
-<select id="taskReminder">
-
-    <option value="none">
-        No reminder
-    </option>
-
-    <option value="5">
-        5 minutes before
-    </option>
-
-    <option value="10">
-        10 minutes before
-    </option>
-
-    <option value="30">
-        30 minutes before
-    </option>
-
-    <option value="60">
-        1 hour before
-    </option>
-
-    <option value="1440">
-        1 day before
-    </option>
-
-</select>
-
-<select id="taskProject">
-
-    <option value="">
-        No Project
-    </option>
-
-</select>
+                </label>
 
 
-<label for="taskPriority">
-    Priority
-</label>
+                <label class="calendar-option">
 
-<select id="taskPriority">
+                    <input
+                        type="checkbox"
+                        checked
+                    >
 
-    <option value="low">
-        Low
-    </option>
+                    <span class="calendar-color green"></span>
 
-    <option value="medium" selected>
-        Medium
-    </option>
+                    <span>
+                        Tasks
+                    </span>
 
-    <option value="high">
-        High
-    </option>
+                </label>
 
-</select>
+            </section>
+
+        </aside>
 
 
-                    <div class="form-buttons">
+        <!-- =================================================
+             CALENDAR
+             ================================================= -->
 
-                        <button id="cancelTask">
-                            Cancel
-                        </button>
+        <section class="calendar-container">
 
-                        <button id="saveTask">
-                            Save Task
-                        </button>
+            <!-- DAY HEADER -->
 
+            <div class="calendar-header">
+
+                <div class="timezone">
+                    GMT+08
+                </div>
+
+                <div
+                    id="weekHeader"
+                    class="week-header"
+                >
+                </div>
+
+            </div>
+
+
+            <!-- SCROLLABLE CALENDAR -->
+
+            <div
+                id="calendarScroll"
+                class="calendar-scroll"
+            >
+
+                <div
+                    id="calendarGrid"
+                    class="calendar-grid"
+                >
+
+                    <!-- TIME LABELS -->
+
+                    <div
+                        id="timeColumn"
+                        class="time-column"
+                    >
+                    </div>
+
+
+                    <!-- DAY COLUMNS -->
+
+                    <div
+                        id="dayColumns"
+                        class="day-columns"
+                    >
                     </div>
 
                 </div>
@@ -202,43 +317,735 @@
             </div>
 
         </section>
-        <section class="projects-section">
+        <!-- =====================================================
+     CREATE MENU
+     ===================================================== -->
 
-    <h2>Projects / Groups</h2>
+<div
+    id="createMenu"
+    class="create-menu hidden"
+>
 
-    <div class="project-form">
+    <button
+        id="createEventButton"
+        type="button"
+    >
+        <span class="menu-icon event-icon">●</span>
+        <span>Event</span>
+    </button>
 
-        <input
-            type="text"
-            id="projectName"
-            placeholder="Project name"
-        >
+    <button
+        id="createTaskButton"
+        type="button"
+    >
+        <span class="menu-icon task-icon">✓</span>
+        <span>Task</span>
+    </button>
 
-        <input
-            type="text"
-            id="projectDescription"
-            placeholder="Description (optional)"
-        >
+</div>
 
-        <button id="addProjectButton">
-            + Add Project
-        </button>
+
+<!-- =====================================================
+     EVENT MODAL
+     ===================================================== -->
+
+<div
+    id="eventModal"
+    class="modal-overlay hidden"
+>
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h2>
+                Create event
+            </h2>
+
+            <button
+                id="closeEventModal"
+                class="modal-close"
+                type="button"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="eventForm">
+
+            <div class="form-group">
+
+                <label for="eventTitle">
+                    Title
+                </label>
+
+                <input
+                    id="eventTitle"
+                    type="text"
+                    placeholder="Add title"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="eventStartDate">
+                        Start date
+                    </label>
+
+                    <input
+                        id="eventStartDate"
+                        type="date"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="eventStartTime">
+                        Start time
+                    </label>
+
+                    <input
+                        id="eventStartTime"
+                        type="time"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="eventEndDate">
+                        End date
+                    </label>
+
+                    <input
+                        id="eventEndDate"
+                        type="date"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="eventEndTime">
+                        End time
+                    </label>
+
+                    <input
+                        id="eventEndTime"
+                        type="time"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+
+                    
+
+                </div>
+
+
+                <div class="form-group">
+
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="eventRepeat">
+                    Repeat
+                </label>
+
+                <select id="eventRepeat">
+
+                    <option value="none">
+                        Does not repeat
+                    </option>
+
+                    <option value="daily">
+                        Daily
+                    </option>
+
+                    <option value="weekly">
+                        Weekly
+                    </option>
+
+                    <option value="monthly">
+                        Monthly
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="eventLocation">
+                    Location
+                </label>
+
+                <input
+                    id="eventLocation"
+                    type="text"
+                    placeholder="Add location"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="eventDescription">
+                    Description
+                </label>
+
+                <textarea
+                    id="eventDescription"
+                    rows="4"
+                    placeholder="Add description"
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="eventReminder">
+                        Reminder
+                    </label>
+
+                    <select id="eventReminder">
+
+                        <option value="0">
+                            At end time
+                        </option>
+
+                        <option value="5">
+                            5 minutes before
+                        </option>
+
+                        <option value="10">
+                            10 minutes before
+                        </option>
+
+                        <option value="15">
+                            15 minutes before
+                        </option>
+
+                        <option value="30">
+                            30 minutes before
+                        </option>
+
+                        <option value="60">
+                            1 hour before
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="eventColor">
+                        Color
+                    </label>
+
+                    <select id="eventColor">
+
+                        <option value="blue">
+                            Blue
+                        </option>
+
+                        <option value="red">
+                            Red
+                        </option>
+
+                        <option value="green">
+                            Green
+                        </option>
+
+                        <option value="yellow">
+                            Yellow
+                        </option>
+
+                        <option value="purple">
+                            Purple
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    id="cancelEvent"
+                    class="cancel-button"
+                    type="button"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    class="save-button"
+                    type="submit"
+                >
+                    Save
+                </button>
+
+            </div>
+
+        </form>
 
     </div>
 
-    <div id="projectList">
-        <p>No projects yet.</p>
+</div>
+
+
+<!-- =====================================================
+     TASK MODAL
+     ===================================================== -->
+
+<div
+    id="taskModal"
+    class="modal-overlay hidden"
+>
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h2>
+                Create task
+            </h2>
+
+            <button
+                id="closeTaskModal"
+                class="modal-close"
+                type="button"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="taskForm">
+
+            <div class="form-group">
+
+                <label for="taskTitle">
+                    Title
+                </label>
+
+                <input
+                    id="taskTitle"
+                    type="text"
+                    placeholder="Add task"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="taskStartDate">
+                        Start date
+                    </label>
+
+                    <input
+                        id="taskStartDate"
+                        type="date"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="taskStartTime">
+                        Start time
+                    </label>
+
+                    <input
+                        id="taskStartTime"
+                        type="time"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="taskEndDate">
+                        End date
+                    </label>
+
+                    <input
+                        id="taskEndDate"
+                        type="date"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="taskEndTime">
+                        End time
+                    </label>
+
+                    <input
+                        id="taskEndTime"
+                        type="time"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+ 
+
+                </div>
+
+
+                <div class="form-group">
+
+
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="taskRepeat">
+                    Repeat
+                </label>
+
+                <select id="taskRepeat">
+
+                    <option value="none">
+                        Does not repeat
+                    </option>
+
+                    <option value="daily">
+                        Daily
+                    </option>
+
+                    <option value="weekly">
+                        Weekly
+                    </option>
+
+                    <option value="monthly">
+                        Monthly
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="taskDescription">
+                    Description
+                </label>
+
+                <textarea
+                    id="taskDescription"
+                    rows="4"
+                    placeholder="Add description"
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="taskReminder">
+                        Reminder
+                    </label>
+
+                    <select id="taskReminder">
+
+                        <option value="0">
+                            At end time
+                        </option>
+
+                        <option value="5">
+                            5 minutes before
+                        </option>
+
+                        <option value="10">
+                            10 minutes before
+                        </option>
+
+                        <option value="15">
+                            15 minutes before
+                        </option>
+
+                        <option value="30">
+                            30 minutes before
+                        </option>
+
+                        <option value="60">
+                            1 hour before
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="taskColor">
+                        Color
+                    </label>
+
+                    <select id="taskColor">
+
+                        <option value="green">
+                            Green
+                        </option>
+
+                        <option value="blue">
+                            Blue
+                        </option>
+
+                        <option value="red">
+                            Red
+                        </option>
+
+                        <option value="yellow">
+                            Yellow
+                        </option>
+
+                        <option value="purple">
+                            Purple
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    id="cancelTask"
+                    class="cancel-button"
+                    type="button"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    class="save-button"
+                    type="submit"
+                >
+                    Save
+                </button>
+
+            </div>
+
+        </form>
+
     </div>
 
-</section>
+</div>
+<!-- =====================================================
+     CALENDAR ITEM DETAILS MODAL
+     ===================================================== -->
 
+<div
+    id="detailsModal"
+    class="modal-overlay hidden"
+>
+
+    <div class="modal details-modal">
+
+        <div class="modal-header">
+
+            <div>
+                <span
+                    id="detailsType"
+                    class="details-type"
+                >
+                    EVENT
+                </span>
+
+                <h2 id="detailsTitle">
+                    Event Title
+                </h2>
+            </div>
+
+            <button
+                id="detailsClose"
+                class="modal-close"
+                type="button"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="details-content">
+
+            <div class="details-row">
+
+                <span class="details-icon">
+                    📅
+                </span>
+
+                <div>
+                    <div
+                        id="detailsDate"
+                        class="details-main"
+                    >
+                        August 10, 2026
+                    </div>
+
+                    <div
+                        id="detailsTime"
+                        class="details-secondary"
+                    >
+                        10:00 AM – 11:00 AM
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div
+                id="detailsDescriptionRow"
+                class="details-row"
+            >
+
+                <span class="details-icon">
+                    📝
+                </span>
+
+                <div
+                    id="detailsDescription"
+                    class="details-secondary"
+                >
+                    No description
+                </div>
+
+            </div>
+
+
+            <div
+                id="detailsLocationRow"
+                class="details-row"
+            >
+
+                <span class="details-icon">
+                    📍
+                </span>
+
+                <div
+                    id="detailsLocation"
+                    class="details-secondary"
+                >
+                    No location
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="details-actions">
+
+            <button
+                id="detailsDelete"
+                class="details-delete-button"
+                type="button"
+            >
+                Delete
+            </button>
+
+            <button
+                id="detailsEdit"
+                class="details-edit-button"
+                type="button"
+            >
+                Edit
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
     </main>
 
 
-<script src="js/dexie.min.js"></script>
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
+
+    <script src="https://unpkg.com/dexie@4.0.8/dist/dexie.js"></script>
 <script src="js/database.js"></script>
-<script src="js/tasks.js"></script>
-<script src="js/calendar.js"></script>
 <script src="js/app.js"></script>
 
 </body>
